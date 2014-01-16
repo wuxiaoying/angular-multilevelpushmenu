@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="main">
 
   <head>
     <meta charset='utf-8' />
@@ -11,7 +11,7 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/site.css">
     <title>Multi-level-push-menu</title>
   </head>
-  <body>
+  <body ng-controller="MainCtrl">
     <wxy-push-menu menu="menu" options="options"></wxy-push-menu>
     <div id="pushobj">
       Some content here!
