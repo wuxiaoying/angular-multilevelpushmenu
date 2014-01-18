@@ -117,3 +117,6 @@
 .multilevelpushmenu_wrapper .iconSpacing_rtl {
     padding: 0 0 0 .4em;
 }
+.multilevelpushmenu_wrapper .slide_out {
+    margin-left: -225px;
+}
