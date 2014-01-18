@@ -16,28 +16,10 @@
         font-family: 'Open Sans Condensed', sans-serif;
         font-size: 1em;
         zoom: 1;
-
-        .ltr {
-            left: 0;
-            margin-left: 0;
-            .box-shadow(5px 0 5px -5px #1f4164);
-            filter: progid:DXImageTransform.Microsoft.Shadow(color=#1f4164,direction=90,strength=2);
-        }
-
-        .rtl {
-            right: 0;
-            margin-right: -100%;
-            .box-shadow(5px 0 5px 5px #1f4164);
-            filter: progid:DXImageTransform.Microsoft.Shadow(color=#1f4164,direction=270,strength=2);
-        }
     }
 
     .multilevelpushmenu_inactive {
         background: #2e6196;
-    }
-
-    .multilevelpushmenu_collapse {
-        margin-left: -225px;
     }
 
     h2 {
@@ -90,16 +72,73 @@
         border-top: 1px solid #295685;
     }
 
-    .floatRight { float: right; }
-    .floatLeft { float: left; }
+    .invisible {
+        visibility: hidden;
+    }
 
-    .invisible { visibility: hidden; }
-    .visible { visibility: visible; }
+    .visible {
+        visibility: visible;
+    }
 
-    .cursorPointer { cursor: pointer; }
+    .cursorPointer {
+        cursor: pointer;
+    }
 
-    .iconSpacing_ltr { padding: 0 .4em 0 0; }
-    .iconSpacing_rtl { padding: 0 0 0 .4em; }
+    &.ltr {
+        .levelHolderClass {
+            left: 0;
+            margin-left: 0;
+            .box-shadow(5px 0 5px -5px #1f4164);
+            filter: progid:DXImageTransform.Microsoft.Shadow(color=#1f4164,direction=90,strength=2);
+        }
+
+        .multilevelpushmenu_collapse {
+            margin-left: -225px;
+        }
+
+        .iconSpacing {
+            padding: 0 .4em 0 0;
+        }
+
+        .itemIcon {
+            float: right;
+        }
+
+        .floatRight {
+            float: right;
+        }
+
+        .floatLeft {
+            float: left;
+        }
+    }
+
+    &.rtl {
+        right: 0;
+        text-align: right;
+
+        .levelHolderClass {
+            right: 0;
+            margin-right: 0;
+            .box-shadow(5px 0 5px 5px #1f4164);
+        }
+
+        .multilevelpushmenu_collapse {
+            margin-right: -225px;
+        }
+
+        .iconSpacing {
+            padding: 0 0 0 .4em;
+        }
+
+        .floatRight {
+            float: left;
+        }
+
+        .floatLeft {
+            float: right;
+        }
+    }
 }
 
 .box-shadow (@value) {
@@ -107,4 +146,3 @@
     -moz-box-shadow: @value;
     box-shadow: @value;
 }
-
