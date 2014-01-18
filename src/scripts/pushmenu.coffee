@@ -5,13 +5,13 @@ module.directive 'wxyPushMenu', ['wxyOptions', 'wxyUtils', (wxyOptions, wxyUtils
         menu: '='
         options: '='
     controller: ($scope, $element, $attrs) ->
-        options = angular.extend wxyOptions, $scope.options
+        $scope.options = options = angular.extend wxyOptions, $scope.options
         $scope.level = 0
         $scope.visible = true
 
         # Calculate width 
         width = options.menuWidth || 265
-        $element.find('.multilevelpushmenu_wrapper').width(width + options.overlapWidth * wxyUtils.DepthOf $scope.menu)
+        $element.find('nav').width(width + options.overlapWidth * wxyUtils.DepthOf $scope.menu)
 
         this.GetBaseWidth = -> width
         this.GetOptions = -> options
@@ -35,11 +35,21 @@ module.directive 'wxySubmenu', ['wxyUtils', (wxyUtils) ->
             scope.$emit 'submenuOpened', scope.level
             return
 
+        scope.collasped = false
+        collapse = ->
+            scope.collapsed = !scope.collapsed
+            scope.inactive = scope.collapsed
+            wxyUtils.PushContainers options.containersToPush, if scope.collapsed then -225 else 0
+            return
+
         scope.childrenLevel = scope.level + 1
             
         scope.openMenu = ->
             scope.$broadcast 'menuOpened', scope.level
-            onOpen()
+            if scope.level == 0 && !scope.inactive || scope.collapsed
+                collapse() 
+            else
+                onOpen()
             return
 
         scope.onSubmenuClicked = (item) ->
@@ -109,9 +119,7 @@ module.factory 'wxyUtils', ->
     PushContainers: PushContainers
 
 module.value 'wxyOptions', 
-    container: null
     containersToPush: null
-    menuId: null
     wrapperClass: 'multilevelpushmenu_wrapper'
     menuInactiveClass: 'multilevelpushmenu_inactive'
     menu: null

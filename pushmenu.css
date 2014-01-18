@@ -4,6 +4,7 @@
     height: 100%;
     margin: 0;
     padding: 0;
+    z-index: 10;
 }
 
 .multilevelpushmenu_wrapper .levelHolderClass {
@@ -38,6 +39,10 @@
 
 .multilevelpushmenu_wrapper .multilevelpushmenu_inactive {
     background: #2e6196;
+}
+
+.multilevelpushmenu_wrapper .multilevelpushmenu_collapse {
+    margin-left: -225px;
 }
 
 .multilevelpushmenu_wrapper h2 {
