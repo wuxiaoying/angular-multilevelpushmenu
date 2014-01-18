@@ -44,7 +44,8 @@
               link: function (scope, element, attr, ctrl) {
                   var collapse, onOpen, options,
                     _this = this;
-                  options = ctrl.GetOptions();
+                  scope.options = options = ctrl.GetOptions();
+                  scope.childrenLevel = scope.level + 1;
                   onOpen = function () {
                       element.width(ctrl.GetBaseWidth());
                       scope.inactive = false;
@@ -56,22 +57,27 @@
                       scope.inactive = scope.collapsed;
                       wxyUtils.PushContainers(options.containersToPush, scope.collapsed ? -225 : 0);
                   };
-                  scope.childrenLevel = scope.level + 1;
-                  scope.openMenu = function () {
+                  scope.openMenu = function (event, menu) {
+                      wxyUtils.StopEventPropagation(event);
                       scope.$broadcast('menuOpened', scope.level);
+                      options.onTitleItemClick(event, menu);
                       if (scope.level === 0 && !scope.inactive || scope.collapsed) {
                           collapse();
                       } else {
                           onOpen();
                       }
                   };
-                  scope.onSubmenuClicked = function (item) {
+                  scope.onSubmenuClicked = function (item, $event) {
                       if (item.menu) {
                           item.visible = true;
                           scope.inactive = true;
+                          options.onGroupItemClick($event, item);
+                      } else {
+                          options.onItemClick($event, item);
                       }
                   };
-                  scope.goBack = function () {
+                  scope.goBack = function (event, menu) {
+                      options.onBackItemClick(event, menu);
                       scope.visible = false;
                       return scope.$emit('submenuClosed', scope.level);
                   };
@@ -103,7 +109,7 @@
               },
               templateUrl: 'Partials/SubMenu.html',
               require: '^wxyPushMenu',
-              restrict: 'E',
+              restrict: 'EA',
               replace: true
           };
       }
@@ -158,7 +164,6 @@
         containersToPush: null,
         wrapperClass: 'multilevelpushmenu_wrapper',
         menuInactiveClass: 'multilevelpushmenu_inactive',
-        menu: null,
         menuWidth: 0,
         menuHeight: 0,
         collapsed: false,

@@ -1,7 +1,7 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html ng-app="main">
 
-  <head>
+<head>
     <meta charset='utf-8' />
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Multi-level-push-menu : Angular version of http://multi-level-push-menu.make.rs/" />
@@ -11,15 +11,19 @@
     <link rel="stylesheet" type="text/css" href="stylesheets/pushmenu.css">
     <link rel="stylesheet" type="text/css" href="stylesheets/site.css">
     <title>Multi-level-push-menu</title>
-  </head>
-  <body ng-controller="MainCtrl">
+</head>
+<body ng-controller="MainCtrl">
     <wxy-push-menu menu="menu" options="options"></wxy-push-menu>
     <div id="pushobj">
-      Some content here!
+        Some content here!
+
+        <ul>
+            <li ng-repeat="event in events track by $index" ng-bind="event"></li>
+        </ul>
     </div>
     <script src="javascripts/jquery-1.10.2.js"></script>
     <script src="javascripts/angular.js"></script>
     <script src="javascripts/pushmenu.js"></script>
     <script src="javascripts/demo.js"></script>
-  </body>
+</body>
 </html>
