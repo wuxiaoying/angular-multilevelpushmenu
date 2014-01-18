@@ -222,10 +222,10 @@
               containersToPush: [$('#pushobj')],
               direction: 'ltr',
               onGroupItemClick: function (event, item) {
-                  $scope.events.push('Group Item ' + item.name + ' menu level clicked!');
+                  $scope.events.push('Group Item ' + item.name + ' clicked!');
               },
               onItemClick: function (event, item) {
-                  $scope.events.push('Item ' + item.name + ' menu level clicked!');
+                  $scope.events.push('Item ' + item.name + ' clicked!');
               },
               onTitleItemClick: function (event, menu) {
                   $scope.events.push('Title item ' + menu.title + ' clicked!');
