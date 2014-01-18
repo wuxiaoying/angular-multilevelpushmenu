@@ -4,6 +4,7 @@
     height: 100%;
     margin: 0;
     padding: 0;
+    z-index: 10;
 }
 
 .multilevelpushmenu_wrapper .levelHolderClass {
@@ -116,4 +117,7 @@
 
 .multilevelpushmenu_wrapper .iconSpacing_rtl {
     padding: 0 0 0 .4em;
+}
+.multilevelpushmenu_wrapper .slide_out {
+    margin-left: -225px;
 }

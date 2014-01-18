@@ -78,15 +78,22 @@
             }
           });
           scope.$on('submenuClosed', function(event, level) {
-            if (level - scope.level === 1) {
+            if (scope.level === 0 && !scope.out) {
               onOpen();
               wxyUtils.StopEventPropagation(event);
             }
           });
           scope.$on('menuOpened', function(event, level) {
+            if (scope.level === 0 && !scope.inactive) {
+              scope.$emit('slideOut');
+            }
             if (scope.level - level > 0) {
               scope.visible = false;
             }
+          });
+          scope.$on('slideOut', function() {
+            scope.out = !scope.out;
+            wxyUtils.PushContainers(options.containersToPush, -225);
           });
         },
         templateUrl: 'Partials/SubMenu.html',

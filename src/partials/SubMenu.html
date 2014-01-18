@@ -1,11 +1,11 @@
-﻿<div ng-show="visible" ng-class="{visible: visible, multilevelpushmenu_inactive: inactive}" class="levelHolderClass ltr">
+﻿<div ng-show="visible" ng-class="{visible: visible, multilevelpushmenu_inactive: inactive, slide_out: out}" class="levelHolderClass ltr">
     <h2><i class="floatRight cursorPointer" ng-class="menu.icon" ng-click="openMenu()"></i>{{menu.title}}</h2>
     <div ng-show="level != 0 && !inactive" class="backItemClass">
         <a href="#" ng-click="goBack()">
             <i class="floatRight fa fa-angle-right"></i>Back
         </a>
     </div>
-    <ul ng-class="{invisible: inactive}">
+    <ul ng-show="!out" ng-class="{invisible: inactive}">
         <li ng-repeat="item in menu.items">
             <a ng-href="{{item.link}}" ng-click="onSubmenuClicked(item)">
                 <i ng-if="item.menu" class="floatLeft iconSpacing_ltr fa fa-angle-left"></i>
