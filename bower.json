@@ -17,6 +17,7 @@
   ],
   "dependencies": {
     "angular": "~1.2.7",
+    "angular-animate": "~1.2.7",
     "jquery": "~1.10.2"
   }
 }
