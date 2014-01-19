@@ -1,4 +1,4 @@
-﻿module = angular.module 'wxy.pushmenu', ['wxy.components']
+﻿module = angular.module 'wxy.pushmenu', ['ngAnimate', 'wxy.components']
 
 module.directive 'wxyPushMenu', ['wxyOptions', 'wxyUtils', (wxyOptions, wxyUtils) ->
     scope: 
@@ -21,7 +21,7 @@ module.directive 'wxyPushMenu', ['wxyOptions', 'wxyUtils', (wxyOptions, wxyUtils
     replace: true
 ]
 
-module.directive 'wxySubmenu', ['wxyUtils', (wxyUtils) ->
+module.directive 'wxySubmenu', ['$animate', 'wxyUtils', ($animate, wxyUtils) ->
     scope: 
         menu: '='
         level: '='
@@ -32,18 +32,35 @@ module.directive 'wxySubmenu', ['wxyUtils', (wxyUtils) ->
 
         # Handler for when a menu is opened. 
         onOpen = ->
+            console.log 'onopen'
             element.width ctrl.GetBaseWidth()
-            scope.inactive = false
+            scope.inactive = false if !scope.collapsed
             scope.$emit 'submenuOpened', scope.level
             return
 
         # Collapse and uncollapse the main menu. 
-        scope.collasped = false
-        collapse = ->
-            scope.collapsed = !scope.collapsed
-            scope.inactive = scope.collapsed
-            wxyUtils.PushContainers options.containersToPush, if scope.collapsed then -225 else 0
-            return
+        if scope.level == 0
+            scope.collasped = false
+            marginCollapsed = options.overlapWidth - ctrl.GetBaseWidth()
+            if options.collapsed
+                scope.collapsed = true
+                scope.inactive = true
+                element.css marginLeft: marginCollapsed
+    
+            collapse = ->
+                scope.collapsed = !scope.collapsed
+                scope.inactive = scope.collapsed
+            
+                $.data element, 'from', if scope.collapsed then 0 else marginCollapsed
+                $.data element, 'to', if scope.collapsed then marginCollapsed else 0
+                if scope.collapsed then options.onCollapseMenuStart() else options.onExpandMenuStart()
+                $animate.addClass element, 'slide', ->
+                    scope.$apply -> 
+                            if scope.collapsed then options.onCollapseMenuEnd() else options.onExpandMenuEnd()
+                        return
+                    return
+                wxyUtils.PushContainers options.containersToPush, if scope.collapsed then marginCollapsed else 0
+                return
 
         # Event handler for when the menu icon is clicked. 
         scope.openMenu = (event, menu) ->
@@ -77,7 +94,18 @@ module.directive 'wxySubmenu', ['wxyUtils', (wxyUtils) ->
 
         # Activate open handler when the menu becomes visible.
         scope.$watch 'visible', (visible) =>
-            onOpen() if visible
+            if visible
+                if scope.level > 0
+                    options.onExpandMenuStart()
+                    # HACK: pass width to animate since ngAnimate doesn't allow optional parameters.
+                    $.data element, 'from', -ctrl.GetBaseWidth() 
+                    $.data element, 'to', 0
+                    $animate.addClass element, 'slide', ->
+                        scope.$apply -> 
+                            options.onExpandMenuEnd()
+                            return
+                        return
+                onOpen() 
             return
 
         # Event listener for when a submenu is opened. Corrects the width for the menu. 
@@ -131,12 +159,18 @@ module.factory 'wxyUtils', ->
     PushContainers = (containersToPush, absoluteDistance) ->
         return if not containersToPush
         $.each containersToPush, ->
-            $(this).stop().animate
-                marginLeft: absoluteDistance
+            $(this).stop().animate marginLeft: absoluteDistance
 
     StopEventPropagation: StopEventPropagation
     DepthOf: DepthOf
     PushContainers: PushContainers
+
+module.animation '.slide', ->
+    addClass: (element, className, onAnimationCompleted) ->
+        element.removeClass className
+        element.css marginLeft: $.data element, 'from'
+        element.animate marginLeft: $.data(element, 'to'), onAnimationCompleted
+        return
 
 module.value 'wxyOptions', 
     containersToPush: null
@@ -144,8 +178,8 @@ module.value 'wxyOptions',
     menuInactiveClass: 'multilevelpushmenu_inactive' # not implemented
     menuWidth: 0 # not implemented
     menuHeight: 0 # not implemented
-    collapsed: false # not implemented
-    fullCollapse: false # not implemented
+    collapsed: false
+    fullCollapse: true # not implemented
     direction: 'ltr'
     backText: 'Back'
     backItemClass: 'backItemClass'
@@ -158,8 +192,8 @@ module.value 'wxyOptions',
     swipe: 'both' # not implemented
     onCollapseMenuStart: -> # not implemented
     onCollapseMenuEnd: -> # not implemented
-    onExpandMenuStart: -> # not implemented
-    onExpandMenuEnd: -> # not implemented
+    onExpandMenuStart: -> 
+    onExpandMenuEnd: -> 
     onGroupItemClick: ->
     onItemClick: ->
     onTitleItemClick: ->
