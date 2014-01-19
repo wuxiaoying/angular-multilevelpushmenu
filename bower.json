@@ -1,5 +1,5 @@
 {
-  "name": "anuglar-multilevelpushmenu",
+  "name": "angular-multilevelpushmenu",
   "version": "0.0.0",
   "homepage": "https://github.com/wuxiaoying/multi-level-push-menu",
   "description": "angular version of multilevelpushmenu",
@@ -8,7 +8,6 @@
     "menu"
   ],
   "license": "MIT",
-  "private": true,
   "ignore": [
     "**/.*",
     "node_modules",
