@@ -30,7 +30,7 @@
 (function() {
   var module;
 
-  module = angular.module('wxy.pushmenu', ['wxy.components']);
+  module = angular.module('wxy.pushmenu', ['ngAnimate', 'wxy.components']);
 
   module.directive('wxyPushMenu', [
     'wxyOptions', 'wxyUtils', function(wxyOptions, wxyUtils) {
@@ -61,7 +61,7 @@
   ]);
 
   module.directive('wxySubmenu', [
-    'wxyUtils', function(wxyUtils) {
+    '$animate', 'wxyUtils', function($animate, wxyUtils) {
       return {
         scope: {
           menu: '=',
@@ -69,21 +69,51 @@
           visible: '='
         },
         link: function(scope, element, attr, ctrl) {
-          var collapse, onOpen, options,
+          var collapse, marginCollapsed, onOpen, options,
             _this = this;
           scope.options = options = ctrl.GetOptions();
           scope.childrenLevel = scope.level + 1;
           onOpen = function() {
+            console.log('onopen');
             element.width(ctrl.GetBaseWidth());
-            scope.inactive = false;
+            if (!scope.collapsed) {
+              scope.inactive = false;
+            }
             scope.$emit('submenuOpened', scope.level);
           };
-          scope.collasped = false;
-          collapse = function() {
-            scope.collapsed = !scope.collapsed;
-            scope.inactive = scope.collapsed;
-            wxyUtils.PushContainers(options.containersToPush, scope.collapsed ? -225 : 0);
-          };
+          if (scope.level === 0) {
+            scope.collasped = false;
+            marginCollapsed = options.overlapWidth - ctrl.GetBaseWidth();
+            if (options.collapsed) {
+              scope.collapsed = true;
+              scope.inactive = true;
+              element.css({
+                marginLeft: marginCollapsed
+              });
+            }
+            collapse = function() {
+              scope.collapsed = !scope.collapsed;
+              scope.inactive = scope.collapsed;
+              $.data(element, 'from', scope.collapsed ? 0 : marginCollapsed);
+              $.data(element, 'to', scope.collapsed ? marginCollapsed : 0);
+              if (scope.collapsed) {
+                options.onCollapseMenuStart();
+              } else {
+                options.onExpandMenuStart();
+              }
+              $animate.addClass(element, 'slide', function() {
+                scope.$apply(function() {
+                  if (scope.collapsed) {
+                    return options.onCollapseMenuEnd();
+                  } else {
+                    return options.onExpandMenuEnd();
+                  }
+                });
+                return;
+              });
+              wxyUtils.PushContainers(options.containersToPush, scope.collapsed ? marginCollapsed : 0);
+            };
+          }
           scope.openMenu = function(event, menu) {
             wxyUtils.StopEventPropagation(event);
             scope.$broadcast('menuOpened', scope.level);
@@ -110,6 +140,16 @@
           };
           scope.$watch('visible', function(visible) {
             if (visible) {
+              if (scope.level > 0) {
+                options.onExpandMenuStart();
+                $.data(element, 'from', -ctrl.GetBaseWidth());
+                $.data(element, 'to', 0);
+                $animate.addClass(element, 'slide', function() {
+                  scope.$apply(function() {
+                    options.onExpandMenuEnd();
+                  });
+                });
+              }
               onOpen();
             }
           });
@@ -187,6 +227,20 @@
     };
   });
 
+  module.animation('.slide', function() {
+    return {
+      addClass: function(element, className, onAnimationCompleted) {
+        element.removeClass(className);
+        element.css({
+          marginLeft: $.data(element, 'from')
+        });
+        element.animate({
+          marginLeft: $.data(element, 'to')
+        }, onAnimationCompleted);
+      }
+    };
+  });
+
   module.value('wxyOptions', {
     containersToPush: null,
     wrapperClass: 'multilevelpushmenu_wrapper',
@@ -194,7 +248,7 @@
     menuWidth: 0,
     menuHeight: 0,
     collapsed: false,
-    fullCollapse: false,
+    fullCollapse: true,
     direction: 'ltr',
     backText: 'Back',
     backItemClass: 'backItemClass',

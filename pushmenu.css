@@ -94,10 +94,6 @@
           box-shadow: 5px 0 5px -5px #1f4164;
 }
 
-.multilevelpushmenu_wrapper.ltr .multilevelpushmenu_collapse {
-  margin-left: -225px;
-}
-
 .multilevelpushmenu_wrapper.ltr .iconSpacing {
   padding: 0 .4em 0 0;
 }
