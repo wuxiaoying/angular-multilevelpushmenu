@@ -4,6 +4,8 @@
     background: #243342;
 }
 
+.multilevelpushmenu_wrapper { position: fixed !important; }
+
 #pushobj {
     position: absolute;
     top: 0px;
