@@ -53,7 +53,7 @@
             return options;
           };
         },
-        templateUrl: 'Partials/MainMenu.html',
+        templateUrl: 'partials/MainMenu.html',
         restrict: 'E',
         replace: true
       };
@@ -174,7 +174,7 @@
             }
           });
         },
-        templateUrl: 'Partials/SubMenu.html',
+        templateUrl: 'partials/SubMenu.html',
         require: '^wxyPushMenu',
         restrict: 'EA',
         replace: true

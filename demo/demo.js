@@ -1,7 +1,5 @@
-﻿(function() {
+(function() {
   var module;
-
-
 
   module = angular.module('main', ['wxy.pushmenu']);
 

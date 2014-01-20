@@ -1,0 +1,21 @@
+{
+  "name": "angular-multi-level-push-menu",
+  "description": "Angular version of multilevel pushmenu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wuxiaoying/multi-level-push-menu"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/wuxiaoying/multi-level-push-menu/blob/master/LICENSE"
+    }
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-coffee": "~0.7.0",
+    "grunt-recess": "~0.4.0",
+    "grunt-contrib-copy": "~0.5.0"
+  }
+}

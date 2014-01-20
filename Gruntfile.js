@@ -7,7 +7,8 @@ module.exports = function(grunt) {
                     join: false
                 },
                 files: {
-                    'pushmenu.js': 'src/scripts/**/*.coffee'
+                    'pushmenu.js': 'src/scripts/**/*.coffee',
+                    'demo/demo.js': 'demo/demo.coffee'
                 }
             }
         },
@@ -17,13 +18,22 @@ module.exports = function(grunt) {
                     compile: true
                 },
                 files: {
-                    "pushmenu.css": ["src/styles/pushmenu.less"]
+                    "pushmenu.css": ["src/styles/pushmenu.less"],
+                    "demo/site.css": ["demo/site.less"]
                 }
+            }
+        },
+        copy: {
+            demo: {
+                files: [
+                    { expand: true, flatten: true, src: ['src/partials/**'], dest: 'demo/partials', filter: 'isFile' }
+                ]
             }
         }
     });
-    
+   
+    grunt.loadNpmTasks('grunt-contrib-copy'); 
     grunt.loadNpmTasks('grunt-contrib-coffee');
     grunt.loadNpmTasks('grunt-recess');
-    grunt.registerTask('default', ['coffee', 'recess']);
+    grunt.registerTask('default', ['coffee', 'recess', 'copy']);
 };

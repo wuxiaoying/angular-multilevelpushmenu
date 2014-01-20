@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html ng-app="main">
+
+<head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Multi-level-push-menu : Angular version of http://multi-level-push-menu.make.rs/" />
+
+    <link href="//fonts.googleapis.com/css?family=Open+Sans+Condensed:300,300italic,700&amp;subset=latin,cyrillic-ext,latin-ext,cyrillic" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="../pushmenu.css">
+    <link rel="stylesheet" type="text/css" href="site.css">
+    <title>Multi-level-push-menu</title>
+</head>
+<body ng-controller="MainCtrl">
+    <wxy-push-menu menu="menu" options="options"></wxy-push-menu>
+    <div id="pushobj">
+        Some content here!
+
+        <ul>
+            <li ng-repeat="event in events track by $index" ng-bind="event"></li>
+        </ul>
+    </div>
+    <script src="bower_components/jquery/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../pushmenu.js"></script>
+    <script src="demo.js"></script>
+</body>
+</html>

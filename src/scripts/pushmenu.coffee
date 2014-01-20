@@ -16,7 +16,7 @@ module.directive 'wxyPushMenu', ['wxyOptions', 'wxyUtils', (wxyOptions, wxyUtils
         this.GetBaseWidth = -> width
         this.GetOptions = -> options
         return
-    templateUrl: 'Partials/MainMenu.html' 
+    templateUrl: 'partials/MainMenu.html' 
     restrict: 'E'
     replace: true
 ]
@@ -129,7 +129,7 @@ module.directive 'wxySubmenu', ['$animate', 'wxyUtils', ($animate, wxyUtils) ->
             return
 
         return
-    templateUrl: 'Partials/SubMenu.html'
+    templateUrl: 'partials/SubMenu.html'
     require: '^wxyPushMenu'
     restrict: 'EA'
     replace: true
