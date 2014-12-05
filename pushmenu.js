@@ -69,8 +69,7 @@
           visible: '='
         },
         link: function(scope, element, attr, ctrl) {
-          var collapse, marginCollapsed, onOpen, options,
-            _this = this;
+          var collapse, marginCollapsed, onOpen, options;
           scope.options = options = ctrl.GetOptions();
           scope.childrenLevel = scope.level + 1;
           onOpen = function() {
@@ -92,16 +91,19 @@
               });
             }
             collapse = function() {
+              var animatePromise;
               scope.collapsed = !scope.collapsed;
               scope.inactive = scope.collapsed;
-              $.data(element, 'from', scope.collapsed ? 0 : marginCollapsed);
-              $.data(element, 'to', scope.collapsed ? marginCollapsed : 0);
               if (scope.collapsed) {
                 options.onCollapseMenuStart();
               } else {
                 options.onExpandMenuStart();
               }
-              $animate.addClass(element, 'slide', function() {
+              animatePromise = $animate.addClass(element, 'slide', {
+                fromMargin: scope.collapsed ? 0 : marginCollapsed,
+                toMargin: scope.collapsed ? marginCollapsed : 0
+              });
+              animatePromise.then(function() {
                 scope.$apply(function() {
                   if (scope.collapsed) {
                     return options.onCollapseMenuEnd();
@@ -138,41 +140,52 @@
             scope.visible = false;
             return scope.$emit('submenuClosed', scope.level);
           };
-          scope.$watch('visible', function(visible) {
-            if (visible) {
-              if (scope.level > 0) {
-                options.onExpandMenuStart();
-                $.data(element, 'from', -ctrl.GetBaseWidth());
-                $.data(element, 'to', 0);
-                $animate.addClass(element, 'slide', function() {
-                  scope.$apply(function() {
-                    options.onExpandMenuEnd();
+          scope.$watch('visible', (function(_this) {
+            return function(visible) {
+              var animatePromise;
+              if (visible) {
+                if (scope.level > 0) {
+                  options.onExpandMenuStart();
+                  animatePromise = $animate.addClass(element, 'slide', {
+                    fromMargin: -ctrl.GetBaseWidth(),
+                    toMargin: 0
                   });
-                });
+                  animatePromise.then(function() {
+                    scope.$apply(function() {
+                      options.onExpandMenuEnd();
+                    });
+                  });
+                }
+                onOpen();
               }
-              onOpen();
-            }
-          });
-          scope.$on('submenuOpened', function(event, level) {
-            var correction, correctionWidth;
-            correction = level - scope.level;
-            correctionWidth = options.overlapWidth * correction;
-            element.width(ctrl.GetBaseWidth() + correctionWidth);
-            if (scope.level === 0) {
-              wxyUtils.PushContainers(options.containersToPush, correctionWidth);
-            }
-          });
-          scope.$on('submenuClosed', function(event, level) {
-            if (level - scope.level === 1) {
-              onOpen();
-              wxyUtils.StopEventPropagation(event);
-            }
-          });
-          scope.$on('menuOpened', function(event, level) {
-            if (scope.level - level > 0) {
-              scope.visible = false;
-            }
-          });
+            };
+          })(this));
+          scope.$on('submenuOpened', (function(_this) {
+            return function(event, level) {
+              var correction, correctionWidth;
+              correction = level - scope.level;
+              correctionWidth = options.overlapWidth * correction;
+              element.width(ctrl.GetBaseWidth() + correctionWidth);
+              if (scope.level === 0) {
+                wxyUtils.PushContainers(options.containersToPush, correctionWidth);
+              }
+            };
+          })(this));
+          scope.$on('submenuClosed', (function(_this) {
+            return function(event, level) {
+              if (level - scope.level === 1) {
+                onOpen();
+                wxyUtils.StopEventPropagation(event);
+              }
+            };
+          })(this));
+          scope.$on('menuOpened', (function(_this) {
+            return function(event, level) {
+              if (scope.level - level > 0) {
+                scope.visible = false;
+              }
+            };
+          })(this));
         },
         templateUrl: 'partials/SubMenu.html',
         require: '^wxyPushMenu',
@@ -229,13 +242,13 @@
 
   module.animation('.slide', function() {
     return {
-      addClass: function(element, className, onAnimationCompleted) {
-        element.removeClass(className);
+      addClass: function(element, className, onAnimationCompleted, options) {
+        element.removeClass('slide');
         element.css({
-          marginLeft: $.data(element, 'from')
+          marginLeft: options.fromMargin + 'px'
         });
         element.animate({
-          marginLeft: $.data(element, 'to')
+          marginLeft: options.toMargin + 'px'
         }, onAnimationCompleted);
       }
     };

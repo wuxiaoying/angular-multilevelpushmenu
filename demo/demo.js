@@ -49,7 +49,7 @@
                   link: '#',
                   menu: {
                     title: 'Televisions',
-                    icon: 'fa fa-desktop',
+                    icon: 'fa-fa-desktop',
                     link: '#',
                     items: [
                       {
@@ -76,7 +76,7 @@
                   link: '#',
                   menu: {
                     title: 'Camera',
-                    icon: 'fa fa-camera-retro',
+                    icon: 'fa-fa-camera-retro',
                     link: '#',
                     items: [
                       {

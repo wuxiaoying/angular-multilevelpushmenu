@@ -51,14 +51,17 @@ module.directive 'wxySubmenu', ['$animate', 'wxyUtils', ($animate, wxyUtils) ->
                 scope.collapsed = !scope.collapsed
                 scope.inactive = scope.collapsed
             
-                $.data element, 'from', if scope.collapsed then 0 else marginCollapsed
-                $.data element, 'to', if scope.collapsed then marginCollapsed else 0
                 if scope.collapsed then options.onCollapseMenuStart() else options.onExpandMenuStart()
-                $animate.addClass element, 'slide', ->
+                animatePromise = $animate.addClass element, 'slide',
+                    fromMargin: if scope.collapsed then 0 else marginCollapsed
+                    toMargin: if scope.collapsed then marginCollapsed else 0
+                    
+                animatePromise.then ->
                     scope.$apply -> 
                             if scope.collapsed then options.onCollapseMenuEnd() else options.onExpandMenuEnd()
                         return
                     return
+                    
                 wxyUtils.PushContainers options.containersToPush, if scope.collapsed then marginCollapsed else 0
                 return
 
@@ -97,14 +100,16 @@ module.directive 'wxySubmenu', ['$animate', 'wxyUtils', ($animate, wxyUtils) ->
             if visible
                 if scope.level > 0
                     options.onExpandMenuStart()
-                    # HACK: pass width to animate since ngAnimate doesn't allow optional parameters.
-                    $.data element, 'from', -ctrl.GetBaseWidth() 
-                    $.data element, 'to', 0
-                    $animate.addClass element, 'slide', ->
+                    animatePromise = $animate.addClass element, 'slide',
+                        fromMargin: -ctrl.GetBaseWidth()
+                        toMargin: 0
+                    
+                    animatePromise.then ->
                         scope.$apply -> 
                             options.onExpandMenuEnd()
                             return
                         return
+                       
                 onOpen() 
             return
 
@@ -166,10 +171,10 @@ module.factory 'wxyUtils', ->
     PushContainers: PushContainers
 
 module.animation '.slide', ->
-    addClass: (element, className, onAnimationCompleted) ->
-        element.removeClass className
-        element.css marginLeft: $.data element, 'from'
-        element.animate marginLeft: $.data(element, 'to'), onAnimationCompleted
+    addClass: (element, className, onAnimationCompleted, options) ->
+        element.removeClass 'slide'
+        element.css marginLeft: options.fromMargin + 'px'
+        element.animate marginLeft: options.toMargin + 'px', onAnimationCompleted
         return
 
 module.value 'wxyOptions', 
