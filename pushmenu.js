@@ -52,11 +52,11 @@
           this.GetOptions = function() {
             return options;
           };
-        },
+        }],
         templateUrl: 'partials/MainMenu.html',
         restrict: 'E',
         replace: true
-      }];
+      };
     }
   ]);
 
