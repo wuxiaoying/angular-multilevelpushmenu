@@ -4,7 +4,7 @@ module.directive 'wxyPushMenu', ['wxyOptions', 'wxyUtils', (wxyOptions, wxyUtils
     scope: 
         menu: '='
         options: '='
-    controller: ($scope, $element, $attrs) ->
+    controller: ['$scope', '$element', '$attrs', ($scope, $element, $attrs) ->
         $scope.options = options = angular.extend wxyOptions, $scope.options
         $scope.level = 0
         $scope.visible = true
@@ -16,6 +16,7 @@ module.directive 'wxyPushMenu', ['wxyOptions', 'wxyUtils', (wxyOptions, wxyUtils
         this.GetBaseWidth = -> width
         this.GetOptions = -> options
         return
+    ]
     templateUrl: 'partials/MainMenu.html' 
     restrict: 'E'
     replace: true

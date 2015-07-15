@@ -39,7 +39,7 @@
           menu: '=',
           options: '='
         },
-        controller: function($scope, $element, $attrs) {
+        controller: ['$scope', '$element', '$attrs', function($scope, $element, $attrs) {
           var options, width;
           $scope.options = options = angular.extend(wxyOptions, $scope.options);
           $scope.level = 0;
@@ -56,7 +56,7 @@
         templateUrl: 'partials/MainMenu.html',
         restrict: 'E',
         replace: true
-      };
+      }];
     }
   ]);
 
