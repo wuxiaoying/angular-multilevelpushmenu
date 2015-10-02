@@ -45,7 +45,9 @@
           $scope.level = 0;
           $scope.visible = true;
           width = options.menuWidth || 265;
-          $element.find('nav').width(width + options.overlapWidth * wxyUtils.DepthOf($scope.menu));
+          $scope.$watch("menu",function(){
+            $element.find('nav').width(width + options.overlapWidth * wxyUtils.DepthOf($scope.menu));
+          });
           this.GetBaseWidth = function() {
             return width;
           };
