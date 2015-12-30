@@ -11,7 +11,7 @@
               compile: function (tElement, tAttr) {
                   var compiledContents, contents;
                   contents = tElement.contents().remove();
-                  compiledContents = null;sub
+                  compiledContents = null;
                   return function (scope, iElement, iAttr) {
                       if (!compiledContents) {
                           compiledContents = $compile(contents);
