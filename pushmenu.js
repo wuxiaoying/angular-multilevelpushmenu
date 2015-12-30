@@ -11,7 +11,7 @@
               compile: function (tElement, tAttr) {
                   var compiledContents, contents;
                   contents = tElement.contents().remove();
-                  compiledContents = null;
+                  compiledContents = null;sub
                   return function (scope, iElement, iAttr) {
                       if (!compiledContents) {
                           compiledContents = $compile(contents);
@@ -58,7 +58,7 @@
                       return (width + options.overlapWidth * wxyUtils.DepthOf($scope.menu.menu[0]));
                   };
               }],
-              templateUrl: 'partials/MainMenu.html,
+              templateUrl: 'partials/MainMenu.html',
               restrict: 'E',
               replace: true
           };
