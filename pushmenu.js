@@ -58,7 +58,7 @@
                       return (width + options.overlapWidth * wxyUtils.DepthOf($scope.menu.menu[0]));
                   };
               }],
-              templateUrl: '/cft-navigation/app/js/directives/cft-navigation-sidebar/cft-navigation-sidebar-mainmenu.html',
+              templateUrl: 'partials/MainMenu.html,
               restrict: 'E',
               replace: true
           };
@@ -267,7 +267,7 @@
                       };
                   })(this));
               },
-              templateUrl: '/cft-navigation/app/js/directives/cft-navigation-sidebar/cft-navigation-sidebar-submenu.html',
+              templateUrl: 'partials/SubMenu.html',
               require: '^wxyPushMenu',
               restrict: 'EA',
               replace: true
