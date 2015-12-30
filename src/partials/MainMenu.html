@@ -1,5 +1,11 @@
-﻿<div id="menu">
-    <nav ng-class="[options.wrapperClass, options.direction]">
-        <wxy-submenu menu="menu" level="level" visible="visible"></wxy-submenu>
+<div id="menu">
+    <div ng-show="!collapsed" class="animate-show" ng-click="collapseAll($event, menu.menu)"></div>
+    <div class="CFT-NS-open-sidebar-wrapper" ng-class="[options.direction]">
+        <button type="button" class="btn btn-default btn-toolbar pull-left" id="baseexpand" ng-click="collapsed?openMenu($event, menu.menu):collapseAll($event, menu.menu)" ng-class="{ active: !collapsed }">
+            <i class="fa fa-reorder"></i>
+        </button>
+    </div>
+    <nav ng-show="!collapsed" ng-class="[options.wrapperClass, options.direction]" style="z-index:1101;">
+        <wxy-submenu menu="menu.menu" level="level" visible="visible" header="menu.product"></wxy-submenu>
     </nav>
 </div>
