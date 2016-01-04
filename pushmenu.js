@@ -220,10 +220,6 @@
                                       fromMargin: 0,
                                       direction: options.direction
                                   });
-                                  animatePromise.then(function () {
-                                      scope.$apply(function () {
-                                      });
-                                  });
                               }
                           }
                       };
