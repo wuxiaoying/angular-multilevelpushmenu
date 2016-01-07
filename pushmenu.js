@@ -180,7 +180,10 @@
                   scope.onSubmenuClicked = function (item, $event) {
                       if (item.child) {
                           item.visible = true;
-                          scope.inactive = true;
+                          // Disable the inactive for now, which allows cover mode to work smoothly
+                          // without flashing.  
+                          // @todo Get a logic fork in here so it can be used in both modes.
+                          //scope.inactive = true;
                           options.onGroupItemClick($event, item);
                       } else {
                           scope.collapseAll($event, item);
