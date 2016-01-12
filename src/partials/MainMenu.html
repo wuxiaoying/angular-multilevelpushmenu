@@ -1,7 +1,7 @@
 <div id="menu">
     <div ng-show="!collapsed" class="animate-show" ng-click="collapseAll($event, menu.menu)"></div>
-    <div class="CFT-NS-open-sidebar-wrapper" ng-class="[options.direction]">
-        <button type="button" class="btn btn-default btn-toolbar pull-left" id="baseexpand" ng-click="collapsed?openMenu($event, menu.menu):collapseAll($event, menu.menu)" ng-class="{ active: !collapsed }">
+    <div class="CFT-NS-open-sidebar" ng-class="[options.direction]">
+        <button type="button" class="btn btn-toolbar pull-left" id="baseexpand" ng-click="collapsed?openMenu($event, menu.menu):collapseAll($event, menu.menu)" ng-class="{ active: !collapsed }">
             <i class="fa fa-reorder"></i>
         </button>
     </div>
