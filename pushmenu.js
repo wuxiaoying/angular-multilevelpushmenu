@@ -275,7 +275,7 @@
     ]);
 
     module.factory('wxyUtils', ['$window', function ($window) {
-        var DepthOf, PushContainers, StopEventPropagation;
+        var DepthOf, PushContainers, StopEventPropagation, setMenuScrollbar;
         StopEventPropagation = function (e) {
             if (e.stopPropagation && e.preventDefault) {
                 e.stopPropagation();
