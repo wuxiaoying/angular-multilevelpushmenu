@@ -123,9 +123,9 @@
                               angular.element('body').addClass('no-scroll');
                               scope.$parent.collapsed = false;
                               options.onExpandMenuStart();
-                              if ($('navigation-sidebar li.active').length > 0) {
-                                  if (angular.element($('navigation-sidebar li.active')).scope().$parent.$parent.level !== 0) {
-                                      var selectedItem = angular.element($('navigation-sidebar li.active')).scope().$parent.$parent.menu;
+                              if ($('cft-navigation-sidebar li.active').length > 0) {
+                              	if (angular.element($('cft-navigation-sidebar li.active')).scope().$parent.$parent.level !== 0) {
+                              		var selectedItem = angular.element($('cft-navigation-sidebar li.active')).scope().$parent.$parent.menu;
                                       selectedItem.visible = true;
                                       scope.inactive = true;
                                   }
