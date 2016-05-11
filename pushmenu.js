@@ -59,7 +59,7 @@
                   };
 				  
 				  //Added to allow open sidebar navigation from outside 
-                  $scope.$on('openSidebarNavigation', function (event) {
+                  $scope.$on('CFT-NM-openSidebarNavigation', function (event) {
                   	$scope.openMenu(event, $scope.menu.menu);
                   });
               }],
@@ -125,7 +125,7 @@
 
                           } else {
                               element.parent().width(ctrl.GetNavigationWidth()).height($window.innerHeight - 40);
-                              angular.element('body').addClass('no-scroll');
+                              angular.element('body').addClass('CFT-NM-overflow-hidden');
                               scope.$parent.collapsed = false;
                               options.onExpandMenuStart();
                               if ($('cft-navigation-sidebar li.active').length > 0) {
@@ -146,7 +146,7 @@
                                   if (scope.collapsed) {
                                       element.parent().width(0);
                                       scope.$parent.collapsed = true;
-                                      angular.element('body').removeClass('no-scroll');
+                                      angular.element('body').removeClass('CFT-NM-overflow-hidden');
                                       return options.onCollapseMenuEnd();
                                   } else {
                                       wxyUtils.setMenuScrollbar(element);
