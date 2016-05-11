@@ -57,6 +57,11 @@
                   this.GetNavigationWidth = function () {
                       return (width + options.overlapWidth * wxyUtils.DepthOf($scope.menu.menu[0]));
                   };
+				  
+				  //Added to allow open sidebar navigation from outside 
+                  $scope.$on('openSidebarNavigation', function (event) {
+                  	$scope.openMenu(event, $scope.menu.menu);
+                  });
               }],
               templateUrl: 'partials/MainMenu.html',
               restrict: 'E',
