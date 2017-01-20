@@ -11,8 +11,8 @@
         </li>
         <li ng-repeat-end ng-repeat="item in section.child" ng-class="{'disabled':!item.isEnabled,'active':item.isActive}">
             <a ng-href=" {{item.link}}" ng-click="onSubmenuClicked(item, $event)">
-                <i ng-if="item.child || item.showLeftArrow" class="floatLeft iconSpacing" ng-class="options.groupIcon"></i>
-                <i ng-if="item.showRightArrow" class="floatLeft iconSpacing" ng-class="options.backItemIcon"></i>
+                <i ng-if="item.child || item.showRightArrow" class="floatLeft iconSpacing" ng-class="options.groupIcon"></i>
+                <i ng-if="item.showLeftArrow" class="floatLeft iconSpacing" ng-class="options.backItemIcon"></i>
                 <i class="iconSpacing_ltr floatLeft" ng-class="item.icon"></i>{{item.title}}
             </a>
             <div ng-if="item.child">
