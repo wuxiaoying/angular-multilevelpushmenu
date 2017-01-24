@@ -1,5 +1,6 @@
 {
   "name": "angular-multi-level-push-menu",
+  "version": "0.0.0",
   "description": "Angular version of multilevel pushmenu",
   "repository": {
     "type": "git",

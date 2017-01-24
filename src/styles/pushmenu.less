@@ -1,56 +1,73 @@
-﻿.multilevelpushmenu_wrapper {
+
+.mlpm_w {
     position: absolute;
-    overflow: hidden;
-    height: 100%;
+    overflow: visible;
     margin: 0;
     padding: 0;
-    z-index: 10;
+}
 
-    .levelHolderClass {
-        position: absolute;
-        overflow: hidden;
+    .mlpm_w .levelHolderClass {
+        position: fixed;
+        overflow: visible;
         top: 0;
-        background: #336ca6;
         width: auto;
-        min-height: 100%;
-        font-family: 'Open Sans Condensed', sans-serif;
         font-size: 1em;
         zoom: 1;
     }
 
-    .multilevelpushmenu_inactive {
-        background: #2e6196;
+    .mlpm_w .invisible {
+        visibility: hidden;
     }
 
-    h2 {
-        font-size: 1.5em;
-        line-height: 1em;
-        font-weight: bold;
-        color: #1f4164;
-        padding: 0 .4em 0 .4em;
+    .mlpm_w .visible {
+        visibility: visible;
     }
 
-    ul {
+    .mlpm_w .ltr {
+        margin-left: -100%;
+        left: 0;
+        -moz-box-shadow: 5px 0 5px -5px #870000;
+        -webkit-box-shadow: 5px 0 5px -5px #870000;
+        box-shadow: 5px 0 5px -5px #870000;
+        filter: progid:DXImageTransform.Microsoft.Shadow(color=#870000,direction=90,strength=2);
+    }
+
+    .mlpm_w.rtl {
+        right: 0;
+        text-align: left;
+    }
+
+        .mlpm_w.rtl .levelHolderClass {
+            margin-right: 0;
+            right: 0;
+            top: 57px;
+            bottom: 40px;
+            -moz-box-shadow: 0 0 20px 6px rgba(0,0,0,.25);
+            -webkit-box-shadow: 0 0 20px 6px rgba(0,0,0,.25);
+            box-shadow: 0 0 20px 6px rgba(0,0,0,.25);
+            filter: progid:DXImageTransform.Microsoft.Shadow(color=#454545,direction=270,strength=2);
+            border-bottom: 1px solid #3a4246;
+        }
+
+    .mlpm_w .mlpm_inactive {
+        background: #ba0011;
+    }
+
+    .mlpm_w ul {
         list-style: none;
         padding: 0;
         margin: 0;
-
-        li {
-            cursor: pointer;
-            border-top: 1px solid #295685;
-            padding: .4em .4em .4em .4em;
-
-            &:last-child {
-                border-bottom: 1px solid #295685;
-            }
-
-            &:hover {
-                background-color: #295685;
-            }
-        }
     }
 
-    a {
+    .mlpm_w li:last-child {
+        border-bottom: 1px solid #870000;
+    }
+
+    .mlpm_w li:hover {
+        background-color: #870000;
+    }
+
+    .mlpm_w a {
         display: block;
         outline: none;
         overflow: hidden;
@@ -59,86 +76,220 @@
         padding: .2em .2em;
         text-decoration: none;
         color: #fff;
+    }
 
-        &:hover {
+        .mlpm_w a:hover {
             color: #ffe;
         }
+
+
+    .mlpm_w .floatRight {
+        float: right;
     }
 
-    .backItemClass {
-        display: block;
-        padding: .4em .4em .4em .4em;
-        background: #2e6196;
-        border-top: 1px solid #295685;
+    .mlpm_w .floatLeft {
+        float: left;
     }
 
-    .invisible {
-        visibility: hidden;
-    }
-
-    .visible {
-        visibility: visible;
-    }
-
-    .cursorPointer {
+    .mlpm_w .cursorPointer {
         cursor: pointer;
     }
 
-    &.ltr {
-        .levelHolderClass {
-            left: 0;
-            margin-left: 0;
-            .box-shadow(5px 0 5px -5px #1f4164);
-            filter: progid:DXImageTransform.Microsoft.Shadow(color=#1f4164,direction=90,strength=2);
-        }
-
-        .iconSpacing {
-            padding: 0 .4em 0 0;
-        }
-
-        .itemIcon {
-            float: right;
-        }
-
-        .floatRight {
-            float: right;
-        }
-
-        .floatLeft {
-            float: left;
-        }
+    .mlpm_w .iconSpacing_rtl {
+        padding: 0 0 0 .4em;
     }
 
-    &.rtl {
-        right: 0;
-        text-align: right;
+    /* Custom */
 
-        .levelHolderClass {
-            right: 0;
-            margin-right: 0;
-            .box-shadow(5px 0 5px 5px #1f4164);
-        }
-
-        .multilevelpushmenu_collapse {
-            margin-right: -225px;
-        }
-
-        .iconSpacing {
-            padding: 0 0 0 .4em;
-        }
-
-        .floatRight {
-            float: left;
-        }
-
-        .floatLeft {
-            float: right;
-        }
+    .mlpm_w .mlpm_inactive {
+        border-right: 1px solid #c9d0d6;
     }
+
+    .mlpm_w li:last-child {
+        border-bottom: 1px solid #c9d0d6;
+    }
+
+    .mlpm_w li:hover {
+        background-color: #f3f6fb;
+        color: #1B242A;
+    }
+
+    .mlpm_w li a:hover {
+        color: #1B242A;
+    }
+
+    .mlpm_w .ltr {
+        -moz-box-shadow: 5px 0 5px -5px #aaaaaa;
+        -webkit-box-shadow: 5px 0 5px -5px #aaaaaa;
+        box-shadow: 5px 0 5px -5px #aaaaaa;
+        filter: progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa, direction=90, strength=2);
+    }
+
+
+    .mlpm_w .backItemClass:hover {
+        background: #3379ba;
+    }
+
+.levelHolderClass h2 .btn-toolbar {
+    line-height: 1.45;
 }
 
-.box-shadow (@value) {
-    -webkit-box-shadow: @value;
-    -moz-box-shadow: @value;
-    box-shadow: @value;
+.mlpm_w .mlpm_inactive h2 .btn-toolbar {
+    border-right: 0 transparent;
+}
+
+.mlpm_w li:hover,
+.mlpm_w li.not-entitled:hover {
+    background-color: #3379ba;
+    border-top: 1px solid #3379ba;
+    color: #ffffff;
+}
+
+.mlpm_w li a:hover {
+    color: #ffffff;
+}
+
+
+.mlpm_w ul > li.active > a {
+    color: #ffffff;
+}
+
+.mlpm_w li.not-entitled {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+    .mlpm_w li.not-entitled a {
+        opacity: .7;
+    }
+
+.mlpm_w .side-menu-sub-header:hover {
+    border-top: 1px solid #c9d0d6;
+    cursor: auto;
+}
+
+.levelHolderClass > li.active > a:after {
+    font-family: 'FontAwesome';
+    display: block;
+    content: "\f00c";
+    float: left;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: none;
+    border-width: 2px 7px 5px 0;
+    border-right-color: #ccc;
+    color: #ccc;
+    margin-top: 0px;
+    margin-left: -21px;
+}
+
+.mlpm_w li.disabled, .mlpm_w a.disabled {
+    cursor: not-allowed;
+    pointer-events: none;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.ps-container .ps-scrollbar-y-rail.in-scrolling {
+    background-color: #eee !important;
+}
+
+.mlpm_w .ps-container .ps-scrollbar-y-rail {
+    opacity: 1 !important;
+    width: 10px !important;
+    right: 0px !important;
+}
+
+    .mlpm_w .ps-container .ps-scrollbar-y-rail:hover,
+    .mlpm_w .ps-container .ps-scrollbar-y-rail.hover {
+        background-color: #eee !important;
+    }
+
+    .mlpm_w .ps-container .ps-scrollbar-y-rail .ps-scrollbar-y {
+        background-color: #aaa !important;
+        width: 10px !important;
+    }
+
+.mlpm_w .mlpm_inactive {
+    border-right: 1px solid #c9d0d6;
+}
+
+.mlpm_w li:hover {
+    background-color: #f3f6fb;
+    color: #1B242A;
+}
+
+.mlpm_w li a:hover {
+    color: #1B242A;
+}
+
+.mlpm_w .ltr {
+    -moz-box-shadow: 5px 0 5px -5px #aaaaaa;
+    -webkit-box-shadow: 5px 0 5px -5px #aaaaaa;
+    box-shadow: 5px 0 5px -5px #aaaaaa;
+    filter: progid:DXImageTransform.Microsoft.Shadow(color=#aaaaaa, direction=90, strength=2);
+}
+
+.mlpm_w .backItemClass:hover {
+    background: #3379ba;
+}
+
+.levelHolderClass h2 .btn-toolbar {
+    line-height: 1.45;
+    border: 0 transparent;
+    float: right;
+}
+
+.levelHolderClass > li.active > a:after {
+    font-family: 'FontAwesome';
+    display: block;
+    content: "\f00c";
+    float: left;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: none;
+    border-width: 2px 7px 5px 0;
+    border-right-color: #ccc;
+    color: #ccc;
+    margin-top: 0px;
+    margin-left: -21px;
+}
+
+.mlpm_w .mlpm_inactive h2 .btn-toolbar {
+    border: 0 transparent;
+}
+
+.mlpm_w li:hover,
+.mlpm_w li.not-entitled:hover {
+    background-color: #3379ba;
+    border-top: 1px solid #3379ba;
+    color: #ffffff;
+}
+
+.mlpm_w li a:hover {
+    color: #ffffff;
+}
+
+.mlpm_w ul > li.active > a {
+    color: #ffffff;
+}
+
+.mlpm_w li.not-entitled {
+    background: rgba(255, 255, 255, 0.6);
+}
+
+    .mlpm_w li.not-entitled a {
+        opacity: .7;
+    }
+
+.mlpm_w .side-menu-sub-header:hover {
+    border-top: 1px solid #c9d0d6;
+    cursor: auto;
+}
+
+.sub-header .mlpm_w {
+    min-width: 250px;
 }

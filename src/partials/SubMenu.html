@@ -1,18 +1,33 @@
-﻿<div ng-show="visible" ng-class="{visible: visible, multilevelpushmenu_inactive: inactive && !collapsed}" class="levelHolderClass">
-    <h2><i class="floatRight cursorPointer" ng-class="menu.icon" ng-click="openMenu($event, menu)"></i>{{menu.title}}</h2>
-    <div ng-show="level != 0 && !inactive" ng-class="options.backItemClass">
+<div ng-show="visible" ng-class="{visible: visible, mlpm_w: inactive && !collapsed}" class="levelHolderClass">
+    <h2 ng-if="level !== 0">{{menu.title}}</h2>
+    <div ng-show="level !== 0 && !inactive" ng-class="options.backItemClass">
         <a href="#" ng-click="goBack($event, menu)">
             <i class="floatRight" ng-class="options.backItemIcon"></i><span ng-bind="options.backText"></span>
         </a>
     </div>
-    <ul ng-class="{invisible: inactive}">
-        <li ng-repeat="item in menu.items">
-            <a ng-href="{{item.link}}" ng-click="onSubmenuClicked(item, $event)">
-                <i ng-if="item.menu" class="floatLeft iconSpacing" ng-class="options.groupIcon"></i>
-                <i class="floatRight" ng-class="item.icon"></i>{{item.name}}
+    <ul ng-if="level === 0" ng-class="{invisible: inactive}">
+        <li ng-repeat-start="section in menu">
+            <h3 title="{{section.title}}" ng-if="section.isHeaderVisible">{{section.title}}</h3>
+        </li>
+        <li ng-repeat-end ng-repeat="item in section.child" ng-class="{'disabled':!item.isEnabled,'active':item.isActive}">
+            <a ng-href=" {{item.link}}" ng-click="onSubmenuClicked(item, $event)">
+                <i ng-if="item.child || item.showRightArrow" class="floatLeft iconSpacing" ng-class="options.groupIcon"></i>
+                <i ng-if="item.showLeftArrow" class="floatLeft iconSpacing" ng-class="options.backItemIcon"></i>
+                <i class="iconSpacing_ltr floatLeft" ng-class="item.icon"></i>{{item.title}}
             </a>
-            <div ng-if="item.menu">
-                <recursive><wxy-submenu menu="item.menu" level="childrenLevel" visible="item.visible"></wxy-submenu></recursive>
+            <div ng-if="item.child">
+                <recursive><wxy-submenu menu="item" level="childrenLevel" visible="item.visible"></wxy-submenu></recursive>
+            </div>
+        </li>
+    </ul>
+    <ul ng-if="level !== 0" ng-class="{invisible: inactive}">
+        <li ng-repeat="item in menu.child" ng-class="{'disabled':!item.isEnabled,'active':item.isActive}">
+            <a ng-href="{{item.link}}" ng-click="onSubmenuClicked(item, $event)">
+                <i ng-if="item.child" class="floatLeft iconSpacing" ng-class="options.groupIcon"></i>
+                <i class="iconSpacing_ltr floatLeft" ng-class="item.icon"></i>{{item.title}}
+            </a>
+            <div ng-if="item.child">
+                <recursive><wxy-submenu menu="item" level="childrenLevel" visible="item.visible"></wxy-submenu></recursive>
             </div>
         </li>
     </ul>
